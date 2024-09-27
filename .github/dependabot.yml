@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 40
+    groups:
+      major-updates:
+        update-types:
+          - major
+      patch-or-minor:
+        update-types:
+          - minor
+          - patch
