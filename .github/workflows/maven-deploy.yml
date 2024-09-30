@@ -1,0 +1,30 @@
+name: Maven Deploy
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  deploy-artifact:
+    name: "Deploy artifact"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: maven
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          server-username: GITHUB_USER # env variable for username in deploy
+          server-password: GITHUB_ACCESS_TOKEN # env variable for token in deploy
+      - name: Submit Dependency Snapshot
+        uses: advanced-security/maven-dependency-submission-action@v4
+
